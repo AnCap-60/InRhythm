@@ -1,0 +1,6 @@
+@InRhythmServer_HostAddress = http://localhost:5223
+
+GET {{InRhythmServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
