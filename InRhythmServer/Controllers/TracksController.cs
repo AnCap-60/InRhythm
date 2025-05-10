@@ -14,19 +14,13 @@ public class TracksController(ITracksService service) : ControllerBase
         return await service.GetTrack(id);
     }
 
-    [HttpGet]
+    [HttpGet("getTracks")]
     public async Task<ActionResult<IEnumerable<Track>>> GetTracks(IEnumerable<Guid> ids)
     {
         return await service.GetTracks(ids);
     }
-
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Track>>> GetTracks(params Guid[] ids)
-    {
-        return await service.GetTracks(ids);
-    }
-
-    [HttpGet]
+    
+    [HttpGet("getPersonalizedTracks")]
     public async Task<ActionResult<IEnumerable<Track>>> GetPersonalizedTracks(Guid userId)
     {
         throw new NotImplementedException();

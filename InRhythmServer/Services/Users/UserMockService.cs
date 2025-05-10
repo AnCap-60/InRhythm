@@ -4,7 +4,7 @@ namespace InRhythmServer.Services.Users;
 
 public class UserMockService : IUserService
 {
-    public Task<List<User>> GetUsers()
+    public Task<List<User>> GetUsers(int page = 1, int pageSize = 10)
     {
         return Task.FromResult<List<User>>([CreateMockUser(), CreateMockUser(), CreateMockUser()]);
     }

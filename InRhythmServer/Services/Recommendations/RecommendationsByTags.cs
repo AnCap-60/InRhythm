@@ -1,9 +1,9 @@
 using InRhythmServer.Models;
 using InRhythmServer.Services.Users;
 
-namespace InRhythmServer.Services.Tracks;
+namespace InRhythmServer.Services.Recommendations;
 
-public class Recommendations(IUserService userService, ITracksService tracksService)
+public class RecommendationsByTags(IUserService userService, ITracksService tracksService) : IRecommendations
 {
     public IEnumerable<Track> TracksThatMatchesWithUserTags(Guid userId)
     {
