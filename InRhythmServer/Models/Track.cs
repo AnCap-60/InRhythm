@@ -8,7 +8,7 @@ public class Track
     
     public int DurationSeconds { get; set; }
     
-    public AlbumBase? Album { get; set; }
+    public Album? Album { get; set; }
     
     public IEnumerable<Tag> Tags { get; set; }
 }

@@ -1,6 +1,10 @@
 namespace InRhythmServer.Models;
 
-public class Album : AlbumBase
+public class Album
 {
-    public IEnumerable<Tag> Tags { get; set; }
+    public Guid Id { get; set; }
+    
+    public string Title { get; set; }
+    
+    public List<Track> Tracks { get; set; }
 }

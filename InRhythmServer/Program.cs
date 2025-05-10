@@ -1,4 +1,6 @@
 using InRhythmServer;
+using InRhythmServer.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
 builder.Services.AddUtils();
+
+builder.Services.AddDbContext<Database>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("DefaultConnection")));
 
 if (useMocks)
     builder.Services.AddMockServices();
@@ -28,6 +33,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapControllers();
 app.MapSwagger();
 
 app.Run();
