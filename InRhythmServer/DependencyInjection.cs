@@ -1,4 +1,5 @@
 using InRhythmServer.Services;
+using InRhythmServer.Services.Artists;
 using InRhythmServer.Services.Recommendations;
 using InRhythmServer.Services.Tags;
 using InRhythmServer.Services.Users;
@@ -10,24 +11,26 @@ public static class DependencyInjection
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         return services
-                .AddSingleton<TagsService>()
-                .AddSingleton<ITracksService, TracksService>()
-                .AddSingleton<IUserService, UserService>()
+                .AddScoped<TagsService>()
+                .AddScoped<ITracksService, TracksService>()
+                .AddScoped<IArtistsService, ArtistsService>()
+                .AddScoped<IUserService, UserService>()
             ;
     }
 
     public static IServiceCollection AddMockServices(this IServiceCollection services)
     {
         return services
-                .AddSingleton<ITracksService, TracksMockService>()
-                .AddSingleton<IUserService, UserMockService>()
+                .AddScoped<ITracksService, TracksMockService>()
+                .AddScoped<IArtistsService, ArtistsMockService>()
+                .AddScoped<IUserService, UserMockService>()
             ;
     }
 
     public static IServiceCollection AddUtils(this IServiceCollection services)
     {
         return services
-                .AddSingleton<IRecommendations, RecommendationsByTags>()
+                .AddScoped<IRecommendations, RecommendationsByTags>()
             ;
     }
 }

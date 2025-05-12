@@ -13,13 +13,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddUtils();
 
-builder.Services.AddDbContext<Database>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("DefaultConnection")));
 
 if (useMocks)
     builder.Services.AddMockServices();
 else
+{
     builder.Services.AddServices();
+    builder.Services.AddDbContext<Database>(options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+}
 
 var app = builder.Build();
 

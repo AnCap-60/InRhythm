@@ -2,11 +2,9 @@ using InRhythmServer.Models;
 
 namespace InRhythmServer.Services;
 
-public interface ITracksService
+public interface ITracksService : IPaginatedService<Track>
 {
-    Task<Track> GetTrack(Guid trackId);
+    Task<List<Track>> GetTracksWithTagsAsync(IEnumerable<Guid> tagIds);
     
-    Task<List<Track>> GetTracks(IEnumerable<Guid> trackIds);
-    
-    Task<List<Track>> GetTracksWithTags(IEnumerable<Guid> tagIds);
+    Task<List<Track>> GetPersonalizedTracks(Guid userId);
 }
