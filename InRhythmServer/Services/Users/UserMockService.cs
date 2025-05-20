@@ -43,4 +43,19 @@ public class UserMockService : IUserService
     {
         return Task.FromResult(true);
     }
+
+    public Task<User?> GetByUsernameAsync(string username)
+    {
+        return Task.FromResult<User?>(CreateMockUser());
+    }
+
+    public Task RegisterAsync(string username, string password)
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task<bool> ValidateCredentialsAsync(string username, string password)
+    {
+        return Task.FromResult(true);
+    }
 }

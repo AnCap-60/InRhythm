@@ -1,11 +1,13 @@
 using InRhythmServer.Models;
 using InRhythmServer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InRhythmServer.Controllers;
 
 [Route("api/Tracks")]
 [ApiController]
+[Authorize]
 public class TracksController(ITracksService service) : ControllerBase
 {
     [HttpGet("{id:guid}")]

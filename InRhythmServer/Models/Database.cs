@@ -17,10 +17,10 @@ public class Database(DbContextOptions<Database> options) : DbContext(options)
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-    }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.SavedTracks)
+            .WithMany()
+            .UsingEntity(j => j.ToTable("UserSavedTracks"));
     }
 }

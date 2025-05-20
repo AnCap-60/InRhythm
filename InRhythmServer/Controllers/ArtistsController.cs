@@ -1,11 +1,13 @@
 using InRhythmServer.Models;
 using InRhythmServer.Services.Artists;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InRhythmServer.Controllers;
 
 [Route("api/Artists")]
 [ApiController]
+[Authorize]
 public class ArtistsController(IArtistsService service) : ControllerBase
 {
     [HttpGet("{id:guid}")]
