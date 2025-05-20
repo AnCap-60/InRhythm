@@ -6,6 +6,8 @@ public class Track
     
     public string Title { get; set; }
     
+    public string Url { get; set; }
+    
     public int DurationSeconds { get; set; }
     
     public Album? Album { get; set; }

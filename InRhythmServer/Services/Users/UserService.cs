@@ -1,22 +1,55 @@
 using InRhythmServer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace InRhythmServer.Services.Users;
 
-public class UserService : IUserService
+public class UserService(Database database) : IUserService
 {
-    // ordering?
-    public async Task<List<User>> GetUsers(int page = 1, int pageSize = 10)
+    public async Task<List<User>> GetSomeAsync(IEnumerable<Guid> ids)
     {
-        throw new NotImplementedException();
+        return await database.Users.Where(u => ids.Contains(u.Id)).ToListAsync();
     }
 
-    public Task<List<User>> GetUsers()
+    public async Task<User?> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await database.Users.FindAsync(id);
     }
 
-    public async Task<User> GetUser(Guid userId)
+    public async Task<User> CreateAsync(User entity)
     {
-        throw new NotImplementedException();
+        database.Users.Add(entity);
+        await database.SaveChangesAsync();
+        
+        return entity;
+    }
+
+    public async Task<bool> UpdateAsync(Guid id, User entity)
+    {
+        var existing = await database.Users.FindAsync(id);
+        if (existing == null)
+            return false;
+
+        database.Entry(existing).CurrentValues.SetValues(entity);
+        await database.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> DeleteAsync(Guid id)
+    {
+        var existing = await database.Users.FindAsync(id);
+        if (existing == null)
+            return false;
+
+        database.Users.Remove(existing);
+        await database.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<List<User>> GetPage(int pageNumber, int pageSize)
+    {
+        return await database.Users
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
     }
 }

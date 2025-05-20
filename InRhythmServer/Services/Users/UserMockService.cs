@@ -4,14 +4,9 @@ namespace InRhythmServer.Services.Users;
 
 public class UserMockService : IUserService
 {
-    public Task<List<User>> GetUsers(int page = 1, int pageSize = 10)
+    public Task<List<User>> GetPage(int page = 1, int pageSize = 10)
     {
         return Task.FromResult<List<User>>([CreateMockUser(), CreateMockUser(), CreateMockUser()]);
-    }
-
-    public Task<User> GetUser(Guid userId)
-    {
-        return Task.FromResult(CreateMockUser());
     }
 
     private User CreateMockUser()
@@ -22,5 +17,30 @@ public class UserMockService : IUserService
             Id = userId,
             Username = "MockUser" + userId.ToString()[..3]
         };
+    }
+
+    public Task<List<User>> GetSomeAsync(IEnumerable<Guid> ids)
+    {
+        return Task.FromResult(ids.Select(x => CreateMockUser()).ToList());
+    }
+
+    public Task<User?> GetAsync(Guid id)
+    {
+        return Task.FromResult<User?>(CreateMockUser());
+    }
+
+    public Task<User> CreateAsync(User entity)
+    {
+        return Task.FromResult(entity);
+    }
+
+    public Task<bool> UpdateAsync(Guid id, User entity)
+    {
+        return Task.FromResult(true);
+    }
+
+    public Task<bool> DeleteAsync(Guid id)
+    {
+        return Task.FromResult(true);
     }
 }

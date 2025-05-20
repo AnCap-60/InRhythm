@@ -1,7 +1,9 @@
+using InRhythmServer.Models;
 using InRhythmServer.Services;
 using InRhythmServer.Services.Artists;
 using InRhythmServer.Services.Recommendations;
 using InRhythmServer.Services.Tags;
+using InRhythmServer.Services.Tracks;
 using InRhythmServer.Services.Users;
 
 namespace InRhythmServer;
@@ -30,7 +32,7 @@ public static class DependencyInjection
     public static IServiceCollection AddUtils(this IServiceCollection services)
     {
         return services
-                .AddScoped<IRecommendations, RecommendationsByTags>()
+                .AddScoped<IRecommendations<Track>, RecommendationsByTags>()
             ;
     }
 }

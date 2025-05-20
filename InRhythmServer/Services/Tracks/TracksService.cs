@@ -1,11 +1,12 @@
 using InRhythmServer.Models;
+using InRhythmServer.Services.Recommendations;
 using Microsoft.EntityFrameworkCore;
 
-namespace InRhythmServer.Services;
+namespace InRhythmServer.Services.Tracks;
 
-public class TracksService(Database database) : ITracksService
+public class TracksService(Database database, IRecommendations<Track> recommendations) : ITracksService
 {
-    public async Task<Track> GetAsync(Guid trackId)
+    public async Task<Track?> GetAsync(Guid trackId)
     {
         return await database.Tracks.FindAsync(trackId);
     }
@@ -14,7 +15,7 @@ public class TracksService(Database database) : ITracksService
     {
         return await database.Tracks.Where(t => trackIds.Contains(t.Id)).ToListAsync();
     }
-    
+
     public async Task<List<Track>> GetPage(int pageNumber, int pageSize)
     {
         return await database.Tracks
@@ -25,19 +26,22 @@ public class TracksService(Database database) : ITracksService
 
     public async Task<List<Track>> GetTracksWithTagsAsync(IEnumerable<Guid> tagIds)
     {
-        return await database.Tracks.Where(track => !track.Tags.Select(tag => tag.Id).Except(tagIds).Any()).ToListAsync();
+        return await database.Tracks.Where(track => !track.Tags.Select(tag => tag.Id)
+                .Except(tagIds)
+                .Any())
+            .ToListAsync();
     }
 
-    public Task<List<Track>> GetPersonalizedTracks(Guid userId)
+    public async Task<List<Track>> GetPersonalizedTracks(Guid userId)
     {
-        throw new NotImplementedException();
+        return await recommendations.GetRecommendedAsync(userId);
     }
 
     public async Task<Track> CreateAsync(Track track)
     {
         database.Tracks.Add(track);
         await database.SaveChangesAsync();
-        
+
         return track;
     }
 
